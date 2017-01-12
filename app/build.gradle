@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.tencent.tinker.patch'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "24.0.3"
+    dexOptions {
+        jumboMode = true
+    }
+
+    defaultConfig {
+        applicationId "com.jc.tinkersample"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile('com.tencent.tinker:tinker-android-anno:1.7.1')
+    //tinker's main Android lib
+    compile('com.tencent.tinker:tinker-android-lib:1.7.1')
+    compile "com.android.support:multidex:1.0.1"
+}
+
+tinkerPatch {
+
+    oldApk = "J://app-debug.apk"
+    ignoreWarning = true
+    useSign = true
+    buildConfig {
+        applyMapping = null
+        applyResourceMapping = null
+        tinkerId = "tinkerId"
+    }
+
+    dex {
+        dexMode = "jar"
+        usePreGeneratedPatchDex = false
+        pattern = ["classes*.dex",
+                   "assets/secondary-dex-?.jar"]
+        loader = ["com.tencent.tinker.loader.*",
+                  "com.jc.tinkersample.SimpleApp",
+                  "com.jc.tinkersample.BaseBuildInfo"
+        ]
+    }
+
+    lib {
+        pattern = ["lib/armeabi/*.so"]
+    }
+
+    res {
+        pattern = ["res/*", "assets/*", "resources.arsc", "AndroidManifest.xml"]
+        ignoreChange = ["assets/sample_meta.txt"]
+        largeModSize = 100
+    }
+
+    packageConfig {
+        configField("patchMessage", "tinker is sample to use")
+        configField("platform", "all")
+        configField("patchVersion", "1.0")
+    }
+
+    sevenZip {
+        zipArtifact = "com.tencent.mm:SevenZip:1.1.10"
+    }
+}
