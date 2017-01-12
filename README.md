@@ -32,7 +32,7 @@ dependencies {
 apply plugin: 'com.tencent.tinker.patch'
 ```
 
-Add tinkerPatch task
+Add tinkerPatch task.
 
 ```gradle
 tinkerPatch {
@@ -79,7 +79,7 @@ tinkerPatch {
 }
 ```
 
-New a class to extend `DefaultApplicationLike`
+Create a class to extend `DefaultApplicationLike` class.
 
 ```java
 @DefaultLifeCycle(
@@ -105,15 +105,15 @@ public class SimpleAppLike extends DefaultApplicationLike {
     }
 }
 ```
-Build apk and install your phone. Then copy the `app-debug.apk` to the `oldApk` path.
+Build apk and install to your phone. Then copy the `app-debug.apk` to the `oldApk` path.
 
-![app_debug](image/app-debug.png)
+![app_debug](image/app_debug.png)
 
 Fix your bug. Then run `tinkerPatchDebug` task to generate patch (new) apk.
 
 ![command](image/command.png)
 
-Generated the `patch_signed_7zip.apk`
+Generated `patch_signed_7zip.apk` file.
 
 ![new apk](image/new_apk.png)
 
