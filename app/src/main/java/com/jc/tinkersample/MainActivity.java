@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
         String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/patch_signed_7zip.apk";
         File file = new File(path);
         if (file.exists()){
-            Toast.makeText(this, "补丁存在", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "热补丁存在", Toast.LENGTH_SHORT).show();
             TinkerInstaller.onReceiveUpgradePatch(getApplicationContext(), path);
         }else{
-            Toast.makeText(this,"补丁不存在", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"热补丁不存在", Toast.LENGTH_SHORT).show();
         }
     }
 
